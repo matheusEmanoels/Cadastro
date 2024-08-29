@@ -11,6 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import br.edu.utfpr.usandosqlite.ListarActivity
 import br.edu.utfpr.usandosqlite.MainActivity
 import br.edu.utfpr.usandosqlite.R
 import br.edu.utfpr.usandosqlite.database.DatabaseHandler
@@ -63,11 +64,13 @@ class ElementoListaAdapter (val context : Context, val cursor : Cursor) : BaseAd
         tvTelefoneElementoLita.setText( cursor.getString(TELEFONE))
 
         btExcluirElementoLista.setOnClickListener{
+            val intent  = Intent( context, ListarActivity::class.java)
+
             banco.delete(cursor.getInt(ID))
 
             Toast.makeText( context, "Sucesso!", Toast.LENGTH_LONG ).show()
 
-            notifyDataSetChanged()
+            context.startActivity(intent)
 
         }
 
