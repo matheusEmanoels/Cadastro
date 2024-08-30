@@ -12,7 +12,7 @@ import br.edu.utfpr.usandosqlite.entity.Cadastro
 class DatabaseHandler (context : Context) : SQLiteOpenHelper(context, DATABESE_NAME,null, DATABESE_VERSION){
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL( "CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " nome TEXT, telefone TEXT)")
+                " nome TEXT, cpf TEXT, telefone TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -22,11 +22,12 @@ class DatabaseHandler (context : Context) : SQLiteOpenHelper(context, DATABESE_N
 
     companion object{
         private const val  DATABESE_NAME = "dbfile.sqlite"
-        private const val  DATABESE_VERSION = 1
+        private const val  DATABESE_VERSION = 2
         private const val  TABLE_NAME = "cadastro"
         public const val  ID = 0
         public const val  NOME = 1
-        public const val  TELEFONE = 2
+        public const val  CPF = 2
+        public const val  TELEFONE = 3
     }
 
     fun insert(cadastro : Cadastro){
@@ -35,6 +36,7 @@ class DatabaseHandler (context : Context) : SQLiteOpenHelper(context, DATABESE_N
         val registro = ContentValues()
 
         registro.put("nome", cadastro.nome)
+        registro.put("cpf", cadastro.cpf)
         registro.put("telefone", cadastro.telefone)
 
         db.insert("cadastro", null, registro)
@@ -47,6 +49,7 @@ class DatabaseHandler (context : Context) : SQLiteOpenHelper(context, DATABESE_N
 
         val registro = ContentValues()
         registro.put("nome", cadastro.nome)
+        registro.put("cpf", cadastro.cpf)
         registro.put("telefone", cadastro.telefone)
 
         db.update(TABLE_NAME, registro, "_id=${cadastro._id}",null)
@@ -63,7 +66,9 @@ class DatabaseHandler (context : Context) : SQLiteOpenHelper(context, DATABESE_N
         val registro = db.query(TABLE_NAME, null, "_id = ${id}", null, null, null, null)
 
         if (registro.moveToNext()){
-            val cadastro = Cadastro(id,registro.getString(NOME),registro.getString(TELEFONE))
+            val cadastro = Cadastro(id,registro.getString(NOME),
+                registro.getString(CPF),
+                registro.getString(TELEFONE))
             return cadastro
 
         } else {
@@ -83,8 +88,9 @@ class DatabaseHandler (context : Context) : SQLiteOpenHelper(context, DATABESE_N
         var registros = mutableListOf<Cadastro>()
 
         while (registro.moveToNext()){
-            val cadastro = Cadastro(registro.getInt(ID), registro.getString(NOME), registro.getString(
-                TELEFONE))
+            val cadastro = Cadastro(registro.getInt(ID), registro.getString(NOME),
+                registro.getString(CPF),
+                registro.getString(TELEFONE))
             registros.add(cadastro)
         }
 

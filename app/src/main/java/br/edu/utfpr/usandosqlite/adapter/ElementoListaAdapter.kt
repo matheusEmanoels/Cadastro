@@ -17,6 +17,7 @@ import br.edu.utfpr.usandosqlite.R
 import br.edu.utfpr.usandosqlite.database.DatabaseHandler
 import br.edu.utfpr.usandosqlite.database.DatabaseHandler.Companion.ID
 import br.edu.utfpr.usandosqlite.database.DatabaseHandler.Companion.NOME
+import br.edu.utfpr.usandosqlite.database.DatabaseHandler.Companion.CPF
 import br.edu.utfpr.usandosqlite.database.DatabaseHandler.Companion.TELEFONE
 import br.edu.utfpr.usandosqlite.entity.Cadastro
 
@@ -34,6 +35,7 @@ class ElementoListaAdapter (val context : Context, val cursor : Cursor) : BaseAd
         return Cadastro(
             cursor.getInt(ID),
             cursor.getString(NOME),
+            cursor.getString(CPF),
             cursor.getString(TELEFONE)
         )
 
@@ -51,6 +53,7 @@ class ElementoListaAdapter (val context : Context, val cursor : Cursor) : BaseAd
         val v = inflater.inflate(R.layout.elemento_lista, null)
 
         val tvNomeElementoLista = v.findViewById<TextView>(R.id.tvElementoLista)
+        val tvCpfElementoLita = v.findViewById<TextView>(R.id.tvCpfElementoLista)
         val tvTelefoneElementoLita = v.findViewById<TextView>(R.id.tvTelefoneElementoLista)
         val btExcluirElementoLista = v.findViewById<ImageButton>(R.id.btExcluirElementoLista)
         val btEditarElementoLista = v.findViewById<ImageButton>(R.id.btEditarElementoLista)
@@ -61,6 +64,7 @@ class ElementoListaAdapter (val context : Context, val cursor : Cursor) : BaseAd
         cursor.moveToPosition(position)
 
         tvNomeElementoLista.setText( cursor.getString(NOME))
+        tvCpfElementoLita.setText(cursor.getString(CPF))
         tvTelefoneElementoLita.setText( cursor.getString(TELEFONE))
 
         btExcluirElementoLista.setOnClickListener{
@@ -82,6 +86,7 @@ class ElementoListaAdapter (val context : Context, val cursor : Cursor) : BaseAd
 
             intent.putExtra("cod", cursor.getInt(ID))
             intent.putExtra("nome", cursor.getInt(NOME))
+            intent.putExtra("cpf", cursor.getString(CPF))
             intent.putExtra("telefone", cursor.getInt(TELEFONE))
 
             context.startActivity(intent)

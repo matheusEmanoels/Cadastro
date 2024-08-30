@@ -33,17 +33,32 @@
         android:inputType="textPersonName"
         android:hint="Digite o Nome"/>
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Telefone:" />
+        android:text="CPF:" />
+
+    <EditText
+        android:id="@+id/etCpf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:hint="Digite o seu CPF"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Whatsapp:" />
 
     <EditText
         android:id="@+id/etTelefone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="phone"
-        android:hint="Digite o Telefone"/>
+        android:hint="Digite o seu Whatsapp"/>
+
+
 
     <Button
         android:id="@+id/btSalvar"
@@ -52,12 +67,6 @@
         android:onClick="btAlterarOnClick"
         android:text="Salvar" />
 
-    <Button
-        android:id="@+id/btExcluir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="btExcluirOnClick"
-        android:text="Excluir" />
 
     <Button
         android:id="@+id/btPesquisar"

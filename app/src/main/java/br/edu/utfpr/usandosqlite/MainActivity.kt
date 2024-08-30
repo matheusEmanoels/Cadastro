@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var etCod : EditText
     private lateinit var etNome : EditText
     private lateinit var etTelefone : EditText
-    private lateinit var btExcluir : Button
+    private lateinit var etCpf : EditText
     private lateinit var btPesquisar : Button
 
     private lateinit var banco : DatabaseHandler
@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity() {
 
         etCod = findViewById( R.id.etCod )
         etNome = findViewById( R.id.etNome )
+        etCpf = findViewById( R.id.etCpf )
         etTelefone = findViewById( R.id.etTelefone )
-        btExcluir = findViewById( R.id.btExcluir )
         btPesquisar = findViewById( R.id.btPesquisar )
 
         etCod.isEnabled = false
@@ -38,9 +38,9 @@ class MainActivity : AppCompatActivity() {
         if ( intent.getIntExtra( "cod", 0 ) != 0 ) {
             etCod.setText( intent.getIntExtra( "cod", 0 ).toString() )
             etNome.setText( intent.getStringExtra( "nome" ) )
+            etCpf.setText( intent.getStringExtra( "cpf" ) )
             etTelefone.setText( intent.getStringExtra( "telefone" ) )
         } else {
-            btExcluir.visibility = View.GONE
             btPesquisar.visibility = View.GONE
         }
 
@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             val cadastro = Cadastro(
                 0,
                 etNome.text.toString(),
+                etCpf.text.toString(),
                 etTelefone.text.toString()
             )
             banco.insert( cadastro )
@@ -61,6 +62,7 @@ class MainActivity : AppCompatActivity() {
             val cadastro = Cadastro(
                 etCod.text.toString().toInt(),
                 etNome.text.toString(),
+                etCpf.text.toString(),
                 etTelefone.text.toString()
             )
             banco.update( cadastro )
@@ -70,13 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         finish()
     }
-    fun btExcluirOnClick(view: View) {
-        banco.delete( etCod.text.toString().toInt() )
 
-        Toast.makeText( this, "Sucesso!", Toast.LENGTH_LONG ).show()
-
-        finish()
-    }
 
     fun btPesquisarOnClick(view: View) {
 
@@ -94,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                 if (cadastro != null) {
                     etCod.setText( etCodPesquisa.text.toString() )
                     etNome.setText(cadastro.nome)
+                    etCpf.setText(cadastro.cpf)
                     etTelefone.setText(cadastro.telefone)
                 } else {
                     Toast.makeText(this, "Registro não encontrado", Toast.LENGTH_LONG).show()
